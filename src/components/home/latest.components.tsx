@@ -3,9 +3,9 @@
 /* eslint-disable @typescript-eslint/no-unsafe-call */
 /* eslint-disable @typescript-eslint/no-unsafe-member-access */
 /* eslint-disable @typescript-eslint/no-unsafe-assignment */
-import React, { useEffect, useState } from 'react'
-import axios from 'axios'
+import { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
+import { API } from '../../controllers/API'
 
 type BlogProps = {
     title: string,
@@ -20,7 +20,7 @@ const Latest = () => {
     const [posts, setPost] = useState<BlogProps[]>([])
 
     const getPost = async () => {
-        const response = await axios.get('https://scaldus.serveo.net/api/v1/publish?page=0&size=3', {headers: {
+        const response = await API.get('/publish?page=0&size=3', {headers: {
         Authorization: 'Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIxIiwiaWF0IjoxNjg5NjgyODEwLCJleHAiOjE2OTAyODc2MTB9.60PdUb82C0r3IrEiG2sYhRbKhN2o_ajrQsjZ23bhAKX_cvA0fLGkV6F5oj7ehcE8O4gC-VUtkGzj_lscFOboCw',
         "Access-Control-Allow-Origin": "*",
         "Access-Control-Allow-Methods": "GET, OPTIONS, POST, PUT",
@@ -34,8 +34,8 @@ const Latest = () => {
     }, [])
 
   return (
-    <div className='newsreader my-10'>
-        <h2 className='uppercase text-[#B67253] font-semibold'>The Latest Posts</h2>
+    <div className='newsreader my-5'>
+        <h2 className='uppercase text-[#B67253] text-2xl font-semibold mb-6'>The Latest Posts</h2>
         <div className='first:bg-[#FF86A5] grid grid-cols-3 gap-12'>
             {posts.map((p, i) => (
                 <LatestBlog key={i} title={p.title} description={p.description} blurb={p.blurb} publishedDate={p.publishedDate} postId={p.postId} position={i} />
@@ -57,7 +57,7 @@ const LatestBlog = ({title, description, blurb, publishedDate, postId, position}
             </div>
             <div className='flex justify-between font-medium mt-10'>
                 <p>{publishedDate}</p>
-                <Link to={`/posts/${postId}`}>Read Article <svg className='inline' width="10" height="10" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg"><path id="Vector" d="M0 8V6H10.3535L6.90234 2L7.76513 0L13.8047 7L7.76513 14L6.90234 12L10.3535 8H0Z" fill="#474F62"/></svg></Link>
+                <Link to={`/posts/${postId}`}>Read Article <svg className='inline' width="10" height="10" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg"><path id="Vector" d="M0 8V6H10.3535L6.90234 2L7.76513 0L13.8047 7L7.76513 14L6.90234 12L10.3535 8H0Z" fill={position === 0 ? '#fff':'#000'} /></svg></Link>
             </div>
         </div>
     )

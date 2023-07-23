@@ -6,6 +6,7 @@
 import axios from 'axios'
 import React, { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
+import { API } from '../../../controllers/API'
 
 type Props = {
     image: string,
@@ -81,7 +82,7 @@ const Section = ({category}: SectionProps) => {
   const [posts, setPosts] = useState<BigProps[]>([])
 
   const getPost = async () => {
-    const response = await axios.get(`https://scaldus.serveo.net/api/v1/publish/${category}/category`, {headers: {
+    const response = await API.get(`/publish/${category}/category`, {headers: {
       "Access-Control-Allow-Origin": "*",
       "Access-Control-Allow-Methods": "GET, OPTIONS, POST, PUT",
       }})

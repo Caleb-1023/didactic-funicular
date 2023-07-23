@@ -7,13 +7,14 @@ import parse from 'html-react-parser';
 import axios from 'axios';
 import { useParams } from 'react-router-dom';
 import './post.css'
+import { API } from '../../controllers/API';
 
 const FileContentComponent = () => {
   const { postId } = useParams()
   const [fileContent, setFileContent] = useState<string>('');
 
   const getPost = async () => {
-    const response = await axios.get(`https://regina.serveo.net/api/v1/post/${postId}`, {headers: {Authorization: 'Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIxIiwiaWF0IjoxNjg5OTYwOTQ1LCJleHAiOjE2OTA1NjU3NDV9.uFbaeRkfOUGgRY4QlUDaYl8iR2vbUAReDkDGuJS7f4xzWkWxE8FNCci_CVbDUIoVQqS50Vs8U7OSnXlRzWcD5A','Access-Control-Allow-Origin': 'http://localhost:5173'}})
+    const response = await API.get(`/post/${postId}`, {headers: {Authorization: 'Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIxIiwiaWF0IjoxNjg5OTYwOTQ1LCJleHAiOjE2OTA1NjU3NDV9.uFbaeRkfOUGgRY4QlUDaYl8iR2vbUAReDkDGuJS7f4xzWkWxE8FNCci_CVbDUIoVQqS50Vs8U7OSnXlRzWcD5A','Access-Control-Allow-Origin': 'http://localhost:5173'}})
       console.log(response)
       const data = await axios.get(response.data.object.content)
       console.log(data.data)

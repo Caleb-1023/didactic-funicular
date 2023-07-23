@@ -2,12 +2,12 @@
 /* eslint-disable @typescript-eslint/no-unsafe-call */
 /* eslint-disable @typescript-eslint/no-unsafe-member-access */
 /* eslint-disable @typescript-eslint/no-unsafe-assignment */
-import React, { useEffect } from 'react'
-import axios from 'axios'
+import { useEffect } from 'react'
+import { API } from '../../controllers/API'
 
 const AllPosts = () => {
   const getAllPosts = async () => {
-    const response = await axios.get('https://regina.serveo.net/api/v1/publish?page=0&size=3')
+    const response = await API.get('/publish?page=0&size=3')
     console.log(response)
   }
 
