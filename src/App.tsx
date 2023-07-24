@@ -1,6 +1,5 @@
 import { Outlet } from "react-router-dom"
-import FileContentComponent from "./components/blog"
-import Home from "./components/home"
+// import FileContentComponent from "./components/blog"
 import Footer from "./components/footer/footer.component"
 import Navbar from "./components/navbar/navbar.component"
 

@@ -1,10 +1,38 @@
 .post img {
-    width: 100%;
-    max-width: 10vw !important;
-    margin: auto;
+    max-width: 100%;
+    margin: 2rem auto 0;
     /* display: inline; */
+}
+
+.post > p, .post > ul, .post > h1, .post > h2 {
+    margin-top: 2rem;
+}
+
+.post > h1 {
+    font-weight: 700;
+    font-size: larger;
+}
+
+ul li {
+    margin-top: 0.5rem;
+}
+
+pre {
+    background-color: blue;
+}
+
+code {
+    background-color: #d2d2d2;
+    padding: 1px;
+    border-radius: 5px;
 }
 
 p {
     width: 100%;
+}
+
+blockquote {
+    padding-left: 10px;
+    border-left: 5px solid #FF86A5;
+    border-radius: 2px;
 }

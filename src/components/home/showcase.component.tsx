@@ -5,11 +5,13 @@
 /* eslint-disable @typescript-eslint/no-floating-promises */
 import { useState, useEffect } from 'react'
 import { API } from '../../controllers/API'
+import { Link } from 'react-router-dom'
 
 type Blogprops = {
   title: string,
   blurb: string,
-  thumbnailUrl: string
+  thumbnailUrl: string,
+  postId: number
 }
 
 const Showcase = () => {
@@ -26,11 +28,11 @@ const Showcase = () => {
   }, [])
 
   return (
-    <div className='w-full my-[100px]'>
+    <div className='w-full mt-10 mb-[100px]'>
         <h1 className='newsreader uppercase tracking-widest md:text-[80px] lg:text-[120px] text-[#4D4D4D] text-center font-light'>The Art of <span className='line-through decoration-[#FF86A5]'>Living</span>
-        <h2 className='text-right text-lg tracking-normal -my-10'>EST.2023</h2>
         </h1>
-        <TopArticle title={article?.title} blurb={article?.blurb} thumbnailUrl={article?.thumbnailUrl} />
+        <h2 className='newsreader text-right text-lg tracking-normal -my-10'>EST.2023</h2>
+        <TopArticle title={article?.title} blurb={article?.blurb} thumbnailUrl={article?.thumbnailUrl} postId={article?.postId} />
     </div>
   )
 }
@@ -38,7 +40,7 @@ const Showcase = () => {
 export default Showcase
 
 
-const TopArticle = ({title, blurb, thumbnailUrl}: Blogprops) => {
+const TopArticle = ({title, blurb, thumbnailUrl, postId}: Blogprops) => {
   const titleWords = title?.split(' ')
   return (
     <div className='newsreader flex flex-col md:flex-row justify-between items-center p-5 space-x-10 my-16'>
@@ -47,6 +49,7 @@ const TopArticle = ({title, blurb, thumbnailUrl}: Blogprops) => {
           <span className={i === 0 ? 'block text-[#FCE0E2]' : ''} key={i}>{t} </span>
         ))}</h1>
         <p className='tracking-widest leading-10 text-xl text-[#828282]'>{blurb}</p>
+        <Link to={`/posts/${postId}`} className='my-10' >Read Article <svg className='inline' width="10" height="10" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg"><path id="Vector" d="M0 8V6H10.3535L6.90234 2L7.76513 0L13.8047 7L7.76513 14L6.90234 12L10.3535 8H0Z" fill='#000' /></svg></Link>
       </div>
       <div className='relative basis-1/3 me-[30px]'>
         <img src={thumbnailUrl} alt="" className='w-full rounded-lg z-20' />
