@@ -89,7 +89,7 @@ const Section = ({category}: SectionProps) => {
       console.log(response)
   }
 
-  const filteredPost = posts.filter((p, i) => i > 0 && i < 3 )
+  const filteredPost = posts.filter((p) => posts.indexOf(p) > 0 && posts.indexOf(p) < 3 )
 
   useEffect(() => {
     getPost()
