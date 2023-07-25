@@ -26,7 +26,7 @@ const AllPosts = () => {
 
 export default AllPosts
 
-const Post = () => {
+export const Post = () => {
   return (
     <div className='newsreader'>
       <img src="https://yinkablog.blob.core.windows.net/yinkasblog/a7706e22-22ee-44f7-9279-2746aafc2943Rectangle 3800.png" alt="" className='w-full' />

@@ -8,6 +8,7 @@ import './index.css'
 import Home from './components/home/index.tsx'
 import FileContentComponent from './components/blog/index.tsx'
 import AllPosts from './components/blog/allposts.component.tsx'
+import CategoryPost from './components/blog/categoryposts.component.tsx'
 
 const router = createBrowserRouter(
   createRoutesFromElements(
@@ -15,6 +16,7 @@ const router = createBrowserRouter(
       <Route index element={<Home />} />
       <Route path='posts'>
         <Route path='all-posts' element={<AllPosts />} />
+        <Route path=':category' element={<CategoryPost />} />
         <Route path=':postId' element={<FileContentComponent />} />
       </Route>
     </Route>
