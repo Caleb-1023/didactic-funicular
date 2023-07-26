@@ -20,12 +20,12 @@ type post ={
 const AllPosts = () => {
   const [posts, setPosts] = useState<post[] | null>(null);
   const [totalPages,setTotalPages]=useState(0)
-  const size=16;
+  const size=5;
 
 
   const getAllPosts = async () => {
     try {
-      const response = await API.get(`/publish?page=0&${size}`)
+      const response = await API.get(`/publish?page=0&size=${size}`)
       setPosts(response.data.content);
       setTotalPages(response.data.totalPages)
       console.log(response);
