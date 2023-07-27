@@ -18,7 +18,7 @@ const Showcase = () => {
   const [article, setArticle] = useState<Blogprops | any>()
 
   const getTopArticle = async () => {
-    const response = await API.get('/publish/main', {headers: {}})
+    const response = await API.get('/publish/main')
     console.log(response)
     setArticle(response.data.object)
   }
@@ -29,7 +29,7 @@ const Showcase = () => {
 
   return (
     <div className='w-full mt-10 mb-[100px]'>
-        <h1 className='newsreader uppercase tracking-widest md:text-[80px] lg:text-[120px] text-[#4D4D4D] text-center font-light'>The Art of <span className='line-through decoration-[#FF86A5]'>Living</span>
+        <h1 className='newsreader uppercase tracking-widest text-[100px] text-[#4D4D4D] text-center font-light'>The Art of <span className='line-through decoration-[#FF86A5]'>Living</span>
         </h1>
         <h2 className='newsreader text-right text-lg tracking-normal -my-10'>EST.2023</h2>
         <TopArticle title={article?.title} blurb={article?.blurb} thumbnailUrl={article?.thumbnailUrl} postId={article?.postId} />

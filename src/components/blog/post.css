@@ -4,7 +4,7 @@
     /* display: inline; */
 }
 
-.post > p, .post > ul, .post > h1, .post > h2 {
+.post > p, .post > ul, .post > h1, .post > h2, .post > blockquote, .post > code, .post > pre, .post > div {
     margin-top: 2rem;
 }
 
@@ -18,13 +18,19 @@ ul li {
 }
 
 pre {
-    background-color: blue;
+    background-color: #d2d2d2;
+    word-wrap: break-word;
+    padding: 2rem;
 }
 
 code {
     background-color: #d2d2d2;
     padding: 1px;
     border-radius: 5px;
+    word-wrap: break-word !important;
+    word-break: break-all !important;
+    display: inline;
+    /* page-break-inside: auto; */
 }
 
 p {

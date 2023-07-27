@@ -16,8 +16,8 @@ const router = createBrowserRouter(
       <Route index element={<Home />} />
       <Route path='posts'>
         <Route path='all-posts' element={<AllPosts />} />
-        <Route path=':category' element={<CategoryPost />} />
         <Route path=':postId' element={<FileContentComponent />} />
+        <Route path='category/:category' element={<CategoryPost />} />
       </Route>
     </Route>
   )

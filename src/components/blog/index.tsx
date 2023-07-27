@@ -15,22 +15,30 @@ type PostProps = {
 }
 
 const FileContentComponent = () => {
+  console.log('running')
+
   const { postId } = useParams()
   const [fileContent, setFileContent] = useState<string>('');
   const [creator, setCreator] = useState<string>('')
   const [date, setDate] = useState<number>(0)
 
+  const getPostCover = async () => {
+    const response = await API.get(`/publish/${postId}/post`)
+    console.log(response)
+  }
+
   const getPost = async () => {
-    const response = await API.get(`/post/${postId}`, {headers: {Authorization: 'Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIxIiwiaWF0IjoxNjg5OTYwOTQ1LCJleHAiOjE2OTA1NjU3NDV9.uFbaeRkfOUGgRY4QlUDaYl8iR2vbUAReDkDGuJS7f4xzWkWxE8FNCci_CVbDUIoVQqS50Vs8U7OSnXlRzWcD5A','Access-Control-Allow-Origin': 'http://localhost:5173'}})
-      console.log(response)
+    const response = await API.get(`/post/${postId}`)
+      // console.log(response)
       setCreator(response.data.object.createdBy)
       setDate(parseInt(response.data.object.publishedDate))
       const data = await axios.get(response.data.object.content)
-      console.log(data.data)
+      // console.log(data.data)
       setFileContent(data.data)
     }
 
   useEffect(() => {
+    getPostCover()
     getPost()
     // console.log(new Date(date))
   }, []);

@@ -1,3 +1,6 @@
+/* eslint-disable @typescript-eslint/no-misused-promises */
+/* eslint-disable @typescript-eslint/no-unsafe-return */
+/* eslint-disable @typescript-eslint/no-unsafe-argument */
 /* eslint-disable @typescript-eslint/no-floating-promises */
 /* eslint-disable @typescript-eslint/no-unsafe-call */
 /* eslint-disable @typescript-eslint/no-unsafe-member-access */
@@ -5,6 +8,7 @@
 import { API } from '../../controllers/API'
 import { useState, useEffect } from "react";
 import ReactPaginate from "react-paginate";
+import { Link } from 'react-router-dom';
 
 
 type post ={
@@ -75,7 +79,7 @@ const handlePageChange=async(data : {selected :number})=>{
                           <img src={element.thumbnailUrl} alt="" className='max-w-full max-h-[75%] m-auto object-cover object-center' />
                         {/* </div> */}
                         <div className='h-1/4'>
-                          <h3 className='inter font-medium my-3'>{element.title}</h3>
+                          <Link to={`/posts/${element.postId}`} className='inter font-medium my-3'>{element.title}</Link>
                           <p className='text-sm'>{element.description}</p>
                         </div>
                       </div>
@@ -92,15 +96,15 @@ const handlePageChange=async(data : {selected :number})=>{
                         marginPagesDisplayed={2}
                         pageRangeDisplayed={3}
                         containerClassName={
-                          "pagination justify-content-end pb-2 mt-5"
+                          "pagination flex items-center justify-center space-x-10 pb-2 mt-5"
                         }
-                        pageClassName={"page-item"}
+                        pageClassName={"page-item text-xl py-1 px-2 rounded bg-gray-200"}
                         pageLinkClassName={"page-link"}
                         previousClassName={"page-item"}
                         nextClassName={"page-item"}
                         previousLinkClassName={"page-link"}
                         nextLinkClassName={"page-link"}
-                        activeClassName={"active"}
+                        activeClassName={"active text-white bg-[#FF86A5]"}
                         breakClassName={"page-item"}
                         breakLinkClassName={"page-link"}
                       />

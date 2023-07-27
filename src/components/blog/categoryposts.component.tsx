@@ -1,3 +1,5 @@
+/* eslint-disable @typescript-eslint/no-unsafe-return */
+/* eslint-disable @typescript-eslint/no-misused-promises */
 /* eslint-disable @typescript-eslint/no-unsafe-argument */
 /* eslint-disable @typescript-eslint/restrict-template-expressions */
 /* eslint-disable @typescript-eslint/no-floating-promises */
@@ -6,34 +8,122 @@
 /* eslint-disable @typescript-eslint/no-unsafe-assignment */
 import { useEffect, useState } from 'react'
 import { API } from '../../controllers/API'
-import { useParams } from 'react-router-dom'
+import { Link, useParams } from 'react-router-dom'
 import { Post } from './allposts.component'
+import ReactPaginate from "react-paginate";
 
-type Post = {
+type Post ={
+    postCoverId: number;
+    postId : number;
+    blurb: string;
+    thumbnailUrl: string;
+    category: string;
     title: string;
-    description: string;
-    image: string;
-}
+    description: string ;
+    publishedDate : string;
+  }
 
 const CategoryPost = () => {
     const {category} = useParams()
 
-    const [posts, setPosts] = useState<Post[]>([])
+    const [posts, setPosts] = useState<Post[] | null>(null);
+    const [totalPages,setTotalPages]=useState(0)
+    const size=5;
 
-    const getPosts = async () => {
-        const response = await API.get(`/publish/${category}/category`)
-        console.log(response)
-        setPosts(response.data.content)
+    const getAllPosts = async () => {
+        try {
+          const response = await API.get(`/publish/${category}/category?page=0&size=${size}`)
+          setPosts(response.data.content);
+          setTotalPages(response.data.totalPages)
+          console.log(response);
+        } catch (error) {
+          console.log(error);
+        
+        }
+        
+      }
+
+    const getPage=async(currentPage : number)=>{
+        try{
+          const response= await API.get(`/publish?page=${currentPage}&size=${size}`);
+          return response.data.content
+        }
+        catch(err){
+          console.log(err)
+        }
+    }
+    
+    const handlePageChange=async(data : {selected :number})=>{
+      try{
+        const page=await getPage(data.selected);
+        setPosts(page)
+      }
+      catch(err){
+        console.log(err);
+      }
+      
     }
     
     useEffect(() => {
-        getPosts()
-    }, [])
+        getAllPosts()
+    }, [category])
 
   return (
-    <div className='grid grid-cols-3 gap-x-7 gap-y-14'>
-        {posts.map(() => (<Post />))}
-    </div>
+    <div>
+      {/* <div className='grid grid-cols-3 gap-x-7 gap-y-14'> */}
+      {posts ? (
+            <>
+              {posts.length > 0 ? (
+                <>
+                <div className='grid grid-cols-3 gap-x-7 gap-y-14'>
+                  {posts.map((element) => {
+                    return (
+                      <div className='newsreader flex flex-col items-start justify-between h-[500px] border-[1px] border-gray-200 p-4 rounded-lg'>
+                        <img src={element.thumbnailUrl} alt="" className='max-w-full max-h-[75%] m-auto object-cover object-center' />
+                        <div className='h-1/4'>
+                            <Link to={`/posts/${element.postId}`} className='inter font-medium my-3'>{element.title}</Link>
+                            <p className='text-sm'>{element.description}</p>
+                        </div>
+                      </div>
+                    
+                    );
+                  })}
+                  </div>
+                   <ReactPaginate
+                        previousLabel={"|<"}
+                        nextLabel={">|"}
+                        breakLabel={"..."}
+                        pageCount={totalPages}
+                        onPageChange={handlePageChange}
+                        marginPagesDisplayed={2}
+                        pageRangeDisplayed={3}
+                        containerClassName={
+                          "pagination flex items-center justify-center space-x-10 pb-2 mt-5"
+                        }
+                        pageClassName={"page-item text-xl py-1 px-2 rounded bg-gray-200"}
+                        pageLinkClassName={"page-link"}
+                        previousClassName={"page-item"}
+                        nextClassName={"page-item"}
+                        previousLinkClassName={"page-link"}
+                        nextLinkClassName={"page-link"}
+                        activeClassName={"active text-white bg-[#FF86A5]"}
+                        breakClassName={"page-item"}
+                        breakLinkClassName={"page-link"}
+                      />
+                </>
+              ) : (
+                <div className="text-center mb-5">
+                  <h2>There are no posts here</h2>
+                </div>
+              )}
+            </>
+               ) : (
+                <div className="mt-5 pt-5 mb-5 text-center">
+                  Loading 
+                </div>
+              )}
+                
+      </div>
   )
 }
 
