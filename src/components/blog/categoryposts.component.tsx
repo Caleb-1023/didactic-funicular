@@ -11,22 +11,12 @@ import { API } from '../../controllers/API'
 import { Link, useParams } from 'react-router-dom'
 import { Post } from './allposts.component'
 import ReactPaginate from "react-paginate";
-
-type Post ={
-    postCoverId: number;
-    postId : number;
-    blurb: string;
-    thumbnailUrl: string;
-    category: string;
-    title: string;
-    description: string ;
-    publishedDate : string;
-  }
+import { IPost } from './allposts.component';
 
 const CategoryPost = () => {
     const {category} = useParams()
 
-    const [posts, setPosts] = useState<Post[] | null>(null);
+    const [posts, setPosts] = useState<IPost[] | null>(null);
     const [totalPages,setTotalPages]=useState(0)
     const size=5;
 
@@ -78,13 +68,7 @@ const CategoryPost = () => {
                 <div className='grid grid-cols-3 gap-x-7 gap-y-14'>
                   {posts.map((element) => {
                     return (
-                      <div className='newsreader flex flex-col items-start justify-between h-[500px] border-[1px] border-gray-200 p-4 rounded-lg'>
-                        <img src={element.thumbnailUrl} alt="" className='max-w-full max-h-[75%] m-auto object-cover object-center' />
-                        <div className='h-1/4'>
-                            <Link to={`/posts/${element.postId}`} className='inter font-medium my-3'>{element.title}</Link>
-                            <p className='text-sm'>{element.description}</p>
-                        </div>
-                      </div>
+                      <Post key={posts.indexOf(element)} post={element} />
                     
                     );
                   })}

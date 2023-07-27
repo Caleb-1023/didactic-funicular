@@ -11,7 +11,7 @@ import ReactPaginate from "react-paginate";
 import { Link } from 'react-router-dom';
 
 
-type post ={
+export type IPost ={
   postCoverId: number;
   postId : number;
   blurb: string;
@@ -22,7 +22,7 @@ type post ={
   publishedDate : string;
 }
 const AllPosts = () => {
-  const [posts, setPosts] = useState<post[] | null>(null);
+  const [posts, setPosts] = useState<IPost[] | null>(null);
   const [totalPages,setTotalPages]=useState(0)
   const size=5;
 
@@ -74,37 +74,30 @@ const handlePageChange=async(data : {selected :number})=>{
                 <div className='grid grid-cols-3 gap-x-7 gap-y-14'>
                   {posts.map((element) => {
                     return (
-                      <div className='newsreader flex flex-col items-start justify-between h-[500px] border-[1px] border-gray-200 p-4 rounded-lg'>
-                        {/* <div className=' w-full flex items-center'> */}
-                          <img src={element.thumbnailUrl} alt="" className='max-w-full max-h-[75%] m-auto object-cover object-center' />
-                        {/* </div> */}
-                        <div className='h-1/4'>
-                          <Link to={`/posts/${element.postId}`} className='inter font-medium my-3'>{element.title}</Link>
-                          <p className='text-sm'>{element.description}</p>
-                        </div>
-                      </div>
+                      <Post key={posts.indexOf(element)} post={element} />
                     
                     );
                   })}
                   </div>
                    <ReactPaginate
-                        previousLabel={"|<"}
-                        nextLabel={">|"}
+                        previousLabel={"< Previous"}
+                        nextLabel={"Next >"}
                         breakLabel={"..."}
                         pageCount={totalPages}
                         onPageChange={handlePageChange}
                         marginPagesDisplayed={2}
                         pageRangeDisplayed={3}
                         containerClassName={
-                          "pagination flex items-center justify-center space-x-10 pb-2 mt-5"
+                          "pagination flex items-center justify-center space-x-5 pb-2 mt-5"
                         }
-                        pageClassName={"page-item text-xl py-1 px-2 rounded bg-gray-200"}
-                        pageLinkClassName={"page-link"}
-                        previousClassName={"page-item"}
-                        nextClassName={"page-item"}
+                        activeClassName={"active"}
+                        activeLinkClassName={"active text-white bg-[#FF86A5]"}
+                        pageClassName={"page-item"}
+                        pageLinkClassName={"page-link p-3 rounded"}
+                        previousClassName={"page-item font-semibold hover:text-[#ff86a5]"}
+                        nextClassName={"page-item font-semibold hover:text-[#ff86a5]"}
                         previousLinkClassName={"page-link"}
                         nextLinkClassName={"page-link"}
-                        activeClassName={"active text-white bg-[#FF86A5]"}
                         breakClassName={"page-item"}
                         breakLinkClassName={"page-link"}
                       />
@@ -128,12 +121,20 @@ const handlePageChange=async(data : {selected :number})=>{
 
 export default AllPosts
 
-export const Post = () => {
+type Props = {
+  post: IPost
+}
+
+export const Post = ({post}: Props) => {
   return (
-    <div className='newsreader'>
-      <img src="https://yinkablog.blob.core.windows.net/yinkasblog/a7706e22-22ee-44f7-9279-2746aafc2943Rectangle 3800.png" alt="" className='w-full' />
-      <h3 className='inter font-medium my-3'>The Safest and Easiest way to use the internet</h3>
-      <p className='text-sm'>Lorem ipsum dolor sit amet, consectetur adipiscing elit. In integer praesent amet amet egestas. </p>
+    <div className='newsreader hover:shadow-lg duration-300 flex flex-col items-start justify-between h-[500px] border-[1px] border-gray-200 p-4 rounded-lg'>
+      {/* <div className=' w-full flex items-center'> */}
+        <img src={post.thumbnailUrl} alt="" className='max-w-full max-h-[75%] m-auto object-cover object-center' />
+      {/* </div> */}
+      <div className='h-1/4'>
+        <Link to={`/posts/${post.postId}`} className='inter font-medium mt-3 mb-6 block'>{post.title}</Link>
+        <p className='text-sm'>{post.description}</p>
+      </div>
     </div>
   )
 }
