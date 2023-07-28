@@ -15,7 +15,7 @@ const Footer = () => {
           </ul>
           <ul>
             <li>Privacy Policy</li>
-            <li>Creators</li>
+            <li><a href='https://creators.yinka.tech' className=''>Creators</a></li>
             <li>Terms and Conditions</li>
           </ul>
         </div>

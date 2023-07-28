@@ -45,11 +45,13 @@ export default Latest
 
 const LatestBlog = ({title, description, blurb, publishedDate, postId, position}: BlogProps) => {
 
+    const maxLength = 250
+
     return (
         <div className={`${position === 0 ? 'bg-[#FF86A5] col-span-3 text-white h-[600px]': (position === 1 ? 'bg-[#FCE0E2]': 'bg-[#F7F7ED] col-span-2')} p-16 flex flex-col justify-between`}>
             <div className={`flex ${position === 0 ? 'flex-row space-x-12':'flex-col space-y-5'}`}>
                 <h3 className={`text-[56px] tracking-tight font-light leading-[67px] ${position === 0 ? 'basis-1/2':''}`}><span className='italic'>{title}</span><span className={`${position === 1 ? 'hidden':''}`}> - {description}</span></h3>
-                <p className={`${position === 0 ? 'basis-1/2':''} text-base leading-10 tracking-widest break-all`}>{blurb}</p>
+                <p className={`${position === 0 ? 'basis-1/2':''} text-base leading-10 tracking-widest break-all`}>{blurb.length>maxLength ? blurb.substring(0, maxLength) + "..." : blurb}</p>
             </div>
             <div className='flex justify-between font-medium mt-10'>
                 <p className='basis-1/2'>{new Date(parseInt(publishedDate)).toDateString()}</p>

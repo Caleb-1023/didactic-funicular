@@ -4,7 +4,7 @@
     /* display: inline; */
 }
 
-.post > p, .post > ul, .post > h1, .post > h2, .post > blockquote, .post > code, .post > pre, .post > div {
+.post > p, .post > ul, .post > h1, .post > h2, .post > blockquote, .post > code, .post > pre, .post > div, .post > hr {
     margin-top: 2rem;
 }
 

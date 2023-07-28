@@ -14,20 +14,32 @@ type PostProps = {
   date: number
 }
 
-const FileContentComponent = () => {
-  console.log('running')
+type ICover = {
+  title: string;
+  description: string;
+  thumbnailUrl: string;
+}
 
+type Cover = {
+  cover: ICover;
+}
+
+const FileContentComponent = () => {
   const { postId } = useParams()
   const [fileContent, setFileContent] = useState<string>('');
+  const [cover, setCover] = useState<ICover | null>(null);
   const [creator, setCreator] = useState<string>('')
   const [date, setDate] = useState<number>(0)
+  const [loading, setLoading] = useState<boolean>(true)
 
-  const getPostCover = async () => {
-    const response = await API.get(`/publish/${postId}/post`)
-    console.log(response)
-  }
+  // const getPostCover = async () => {
+  //   const postCover = await API.get(`/publish/${postId}/post`)
+  //   setCover(postCover.data.object)
+  // }
 
   const getPost = async () => {
+    const postCover = await API.get(`/publish/${postId}/post`)
+    setCover(postCover.data.object)
     const response = await API.get(`/post/${postId}`)
       // console.log(response)
       setCreator(response.data.object.createdBy)
@@ -35,20 +47,30 @@ const FileContentComponent = () => {
       const data = await axios.get(response.data.object.content)
       // console.log(data.data)
       setFileContent(data.data)
+      setLoading(false)
     }
 
   useEffect(() => {
-    getPostCover()
+    // getPostCover()
     getPost()
     // console.log(new Date(date))
   }, []);
 
   return (
     <div className='newsreader max-w-[50vw] mx-auto text-xl leading-8'>
-      {/* <h1 className='font-bold text-2xl'>Ask AJ about post cover</h1> */}
-      {/* <h1 className='font-bold text-2xl'>Issue with published date</h1> */}
-      <PostedBy creator={creator} date={date} />
-      <div className='post'>{parse(fileContent)}</div>
+      {loading ? 
+      <div className="w-full flex items-center justify-center">
+        <svg width="50px" height="50px" className="animate-spin my-36" viewBox="0 0 14 14" xmlns="http://www.w3.org/2000/svg"><g fill="none" fillRule="evenodd"><circle cx="7" cy="7" r="6" stroke="#000000" strokeOpacity=".1" strokeWidth="2"/><path fill="#FF86A5" fillOpacity="1" fillRule="nonzero" d="M7 0a7 7 0 0 1 7 7h-2a5 5 0 0 0-5-5V0z"/></g></svg>
+      </div>
+      :
+      <>
+        <h1 className='inter text-5xl font-bold mt-12 -mb-3'>{cover?.title}</h1>
+        <h2 className='inter text-2xl text-[#6B6B6B] my-6'>{cover?.description}</h2>
+        <PostedBy creator={creator} date={date} />
+        <img src={cover?.thumbnailUrl} alt="Blog Post Thumbnail" className='m-auto max-w-full' />
+        <div className='post'>{parse(fileContent)}</div>
+      </>
+      }
     </div>
   );
 };
