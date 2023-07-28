@@ -20,10 +20,6 @@ type ICover = {
   thumbnailUrl: string;
 }
 
-type Cover = {
-  cover: ICover;
-}
-
 const FileContentComponent = () => {
   const { postId } = useParams()
   const [fileContent, setFileContent] = useState<string>('');
