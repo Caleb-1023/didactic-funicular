@@ -24,7 +24,7 @@ export type IPost ={
 const AllPosts = () => {
   const [posts, setPosts] = useState<IPost[] | null>(null);
   const [totalPages,setTotalPages]=useState(0)
-  const size=5;
+  const size=18;
 
 
   const getAllPosts = async () => {
@@ -90,9 +90,9 @@ const handlePageChange=async(data : {selected :number})=>{
                         containerClassName={
                           "pagination flex items-center justify-center space-x-5 pb-2 mt-5"
                         }
-                        activeClassName={"active"}
+                        activeClassName={"active py-3 bg-[#ff86a5] rounded"}
                         activeLinkClassName={"active text-white bg-[#FF86A5]"}
-                        pageClassName={"page-item"}
+                        pageClassName={"page-item bg-gray-200 py-3 rounded"}
                         pageLinkClassName={"page-link p-3 rounded"}
                         previousClassName={"page-item font-semibold hover:text-[#ff86a5]"}
                         nextClassName={"page-item font-semibold hover:text-[#ff86a5]"}

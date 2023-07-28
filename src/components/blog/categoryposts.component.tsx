@@ -8,7 +8,7 @@
 /* eslint-disable @typescript-eslint/no-unsafe-assignment */
 import { useEffect, useState } from 'react'
 import { API } from '../../controllers/API'
-import { Link, useParams } from 'react-router-dom'
+import { useParams } from 'react-router-dom'
 import { Post } from './allposts.component'
 import ReactPaginate from "react-paginate";
 import { IPost } from './allposts.component';
@@ -18,7 +18,7 @@ const CategoryPost = () => {
 
     const [posts, setPosts] = useState<IPost[] | null>(null);
     const [totalPages,setTotalPages]=useState(0)
-    const size=5;
+    const size=18;
 
     const getAllPosts = async () => {
         try {
@@ -73,24 +73,25 @@ const CategoryPost = () => {
                     );
                   })}
                   </div>
-                   <ReactPaginate
-                        previousLabel={"|<"}
-                        nextLabel={">|"}
+                  <ReactPaginate
+                        previousLabel={"< Previous"}
+                        nextLabel={"Next >"}
                         breakLabel={"..."}
                         pageCount={totalPages}
                         onPageChange={handlePageChange}
                         marginPagesDisplayed={2}
                         pageRangeDisplayed={3}
                         containerClassName={
-                          "pagination flex items-center justify-center space-x-10 pb-2 mt-5"
+                          "pagination flex items-center justify-center space-x-5 pb-2 mt-5"
                         }
-                        pageClassName={"page-item text-xl py-1 px-2 rounded bg-gray-200"}
-                        pageLinkClassName={"page-link"}
-                        previousClassName={"page-item"}
-                        nextClassName={"page-item"}
+                        activeClassName={"active py-3 bg-[#ff86a5] rounded"}
+                        activeLinkClassName={"active text-white bg-[#FF86A5]"}
+                        pageClassName={"page-item bg-gray-200 py-3 rounded"}
+                        pageLinkClassName={"page-link p-3 rounded"}
+                        previousClassName={"page-item font-semibold hover:text-[#ff86a5]"}
+                        nextClassName={"page-item font-semibold hover:text-[#ff86a5]"}
                         previousLinkClassName={"page-link"}
                         nextLinkClassName={"page-link"}
-                        activeClassName={"active text-white bg-[#FF86A5]"}
                         breakClassName={"page-item"}
                         breakLinkClassName={"page-link"}
                       />
