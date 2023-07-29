@@ -18,11 +18,14 @@ type BlogProps = {
 
 const Latest = () => {
     const [posts, setPost] = useState<BlogProps[]>([])
+    const [loading, setLoading] = useState<boolean>(false)
 
     const getPost = async () => {
+        setLoading(true)
         const response = await API.get('/publish?page=0&size=3', )
         setPost(response.data.content)
-        console.log(response)
+        setLoading(false)
+        // console.log(response)
     }
 
     useEffect(() => {
@@ -31,11 +34,17 @@ const Latest = () => {
 
   return (
     <div className='newsreader my-5'>
-        <h2 className='uppercase text-[#B67253] text-2xl font-semibold mb-6'>The Latest Posts</h2>
-        <div className='first:bg-[#FF86A5] grid grid-cols-3 gap-12'>
-            {posts.map((p, i) => (
+        <h2 className='uppercase text-[#B67253] text-lg lg:text-2xl font-semibold mb-6'>The Latest Posts</h2>
+        <div className='first:bg-[#FF86A5] grid grid-cols-1 lg:grid-cols-3 gap-4 lg:gap-12'>
+            {loading ? 
+            <><div className='w-full h-60 bg-gray-300 rounded-lg animate-pulse'></div>
+            <div className='w-full h-60 bg-gray-300 rounded-lg animate-pulse hidden lg:block'></div>
+            <div className='w-full h-60 bg-gray-300 rounded-lg animate-pulse hidden lg:block'></div></>
+            :
+            <>{posts.map((p, i) => (
                 <LatestBlog key={i} title={p.title} description={p.description} blurb={p.blurb} publishedDate={p.publishedDate} postId={p.postId} position={i} />
-            ))}
+            ))}</>
+            }
         </div>
     </div>
   )
@@ -48,10 +57,10 @@ const LatestBlog = ({title, description, blurb, publishedDate, postId, position}
     const maxLength = 250
 
     return (
-        <div className={`${position === 0 ? 'bg-[#FF86A5] col-span-3 text-white h-[600px]': (position === 1 ? 'bg-[#FCE0E2]': 'bg-[#F7F7ED] col-span-2')} p-16 flex flex-col justify-between`}>
-            <div className={`flex ${position === 0 ? 'flex-row space-x-12':'flex-col space-y-5'}`}>
-                <h3 className={`text-[56px] tracking-tight font-light leading-[67px] ${position === 0 ? 'basis-1/2':''}`}><span className='italic'>{title}</span><span className={`${position === 1 ? 'hidden':''}`}> - {description}</span></h3>
-                <p className={`${position === 0 ? 'basis-1/2':''} text-base leading-10 tracking-widest break-all`}>{blurb.length>maxLength ? blurb.substring(0, maxLength) + "..." : blurb}</p>
+        <div className={`${position === 0 ? 'bg-[#FF86A5] lg:col-span-3 text-white lg:h-[600px]': (position === 1 ? 'bg-[#FCE0E2]': 'bg-[#F7F7ED] lg:col-span-2')} p-8 lg:p-16 flex flex-col justify-between min-h-60 lg:min-h-none max-h-[500px] lg:max-h-none`}>
+            <div className={`flex ${position === 0 ? 'flex-col lg:flex-row lg:space-x-12':'flex-col space-y-5'}`}>
+                <h3 className={`text-2xl lg:text-[56px] tracking-tight font-light leading-10 lg:leading-[67px] mb-3 lg:mb-0 ${position === 0 ? 'basis-1/2':''}`}><span className='italic'>{title}</span><span className={`${position === 1 ? 'hidden':''}`}> - {description}</span></h3>
+                <p className={`${position === 0 ? 'basis-1/2':''} lg:text-base lg:leading-10 tracking-widest break-all`}>{blurb.length>maxLength ? blurb.substring(0, maxLength) + "..." : blurb}</p>
             </div>
             <div className='flex justify-between font-medium mt-10'>
                 <p className='basis-1/2'>{new Date(parseInt(publishedDate)).toDateString()}</p>

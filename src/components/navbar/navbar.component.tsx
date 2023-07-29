@@ -1,4 +1,5 @@
 import { Link, useLocation } from "react-router-dom"
+import { useState } from 'react'
 
 const Navbar = () => {
   const location = useLocation()
@@ -8,11 +9,29 @@ const Navbar = () => {
 
   const categories = ['design', 'ux', 'tech', 'lifestyle', 'skincare', 'food', 'all-posts']
 
+  const [menu, setMenu] = useState<boolean>(false)
+
+  const handleMenu = () => {
+    setMenu(!menu)
+  }
+
   return (
-    <div className="py-3 my-6 flex flex-row items-center justify-between">
+    <div className="py-3 px-5 lg:px-0 my-6 flex flex-row items-center justify-between z-50">
       <Link to={'/'} className="shadows text-5xl">ola<span className="text-[#FF86A5]">y</span>inks</Link>
+      <div className={`fixed top-0 left-0 w-screen h-screen bg-[#000000ee] p-10 duration-300 ${menu ? 'block':'hidden'}`}>
+        <svg className="block absolute right-5 md:right-10 top-5 md:top-10" onClick={handleMenu} width="32" height="32" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><g id="Menu / Close_MD"><path id="Vector" d="M18 18L12 12M12 12L6 6M12 12L18 6M12 12L6 18" stroke="#ffffff" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/></g></svg>
+        <Link to={'/'} className="shadows text-white text-4xl md:text-6xl mb-10 block"  onClick={handleMenu}>ola<span className="text-[#FF86A5]">y</span>inks</Link>
+        <div className="flex space-x-14">
+        <ul className="flex flex-col items-start inter text-[#fff] font-medium text-xl md:text-3xl space-y-10">
+          {categories.map((c, i) => (
+            <li key={i}><Link to={`/posts/${c === 'all-posts' ? 'all-posts':`category/${c}`}`} className={`capitalize ${active === c ? 'text-[#ff86a5]':''}`} onClick={handleMenu}>{c === 'all-posts' ? 'all posts':`${c === 'ux' ? 'user experience':c}`}</Link></li>
+          ))}
+        </ul>
+      </div>
+      </div>
       <div className="flex space-x-14">
-        <ul className="flex items-center space-x-12 inter text-[#787878] font-medium text-base">
+        <svg className="lg:hidden" onClick={handleMenu} width="32" height="32" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><g id="Menu / Menu_Alt_04"><path id="Vector" d="M5 17H19M5 12H19M5 7H13" stroke="#ff86a5" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/></g></svg>
+        <ul className="hidden lg:flex items-center space-x-12 inter text-[#787878] font-medium text-base">
           {categories.map((c, i) => (
             <li key={i}><Link to={`/posts/${c === 'all-posts' ? 'all-posts':`category/${c}`}`} className={`capitalize ${active === c ? 'text-[#ff86a5]':''}`}>{c === 'all-posts' ? 'all posts':`${c === 'ux' ? 'user experience':c}`}</Link></li>
           ))}

@@ -7,7 +7,7 @@ import ScrollButton from "./components/scroll-button/scroll-button.component"
 function App() {
 
   return (
-    <div className="min-h-[100vh] flex flex-col justify-between mx-20">
+    <div className="min-h-[100vh] max-w-7xl flex flex-col justify-between px-5 mx-auto lg:x-20">
       <Navbar />
       <Outlet />
       <Footer />
