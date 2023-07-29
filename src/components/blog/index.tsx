@@ -53,18 +53,18 @@ const FileContentComponent = () => {
   }, []);
 
   return (
-    <div className='newsreader max-w-[50vw] mx-auto text-xl leading-8'>
+    <div className='newsreader max-w-[80vw] lg:max-w-[50vw] mx-auto text-xl leading-8'>
       {loading ? 
       <div className="w-full flex items-center justify-center">
         <svg width="50px" height="50px" className="animate-spin my-36" viewBox="0 0 14 14" xmlns="http://www.w3.org/2000/svg"><g fill="none" fillRule="evenodd"><circle cx="7" cy="7" r="6" stroke="#000000" strokeOpacity=".1" strokeWidth="2"/><path fill="#FF86A5" fillOpacity="1" fillRule="nonzero" d="M7 0a7 7 0 0 1 7 7h-2a5 5 0 0 0-5-5V0z"/></g></svg>
       </div>
       :
       <>
-        <h1 className='inter text-5xl font-bold mt-12 -mb-3'>{cover?.title}</h1>
-        <h2 className='inter text-2xl text-[#6B6B6B] my-6'>{cover?.description}</h2>
+        <h1 className='inter text-2xl md:text-3xl lg:text-5xl font-bold mt-12 -mb-3'>{cover?.title}</h1>
+        <h2 className='inter text-base md:text-xl lg:text-2xl text-[#6B6B6B] my-6'>{cover?.description}</h2>
         <PostedBy creator={creator} date={date} />
         <img src={cover?.thumbnailUrl} alt="Blog Post Thumbnail" className='m-auto max-w-full' />
-        <div className='post'>{parse(fileContent)}</div>
+        <div className='post text-sm md:text-base'>{parse(fileContent)}</div>
       </>
       }
     </div>

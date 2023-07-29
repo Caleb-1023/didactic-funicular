@@ -62,8 +62,7 @@ const TopArticle = ({title, blurb, thumbnailUrl, postId}: Blogprops) => {
   const maxLength = 250
 
   const titleWords = title?.split(' ')
-  const truncateBlurb = blurb?.split(' ').splice(20).toString()
-  console.log(truncateBlurb)
+  const truncateBlurb = blurb?.split(' ').splice(0, 25).concat(['...']).join(' ')
 
   return (
     <div className='newsreader flex flex-col md:flex-row justify-between items-center p-5 lg:space-x-10 my-8 lg:my-16'>
@@ -71,7 +70,7 @@ const TopArticle = ({title, blurb, thumbnailUrl, postId}: Blogprops) => {
         <h1 className='uppercase text-xl md:text-4xl lg:text-5xl text-[#4d4d4d] font-medium mb-7'>{titleWords?.map((t, i) => (
           <span className={i === 0 ? 'block text-[#FCE0E2]' : ''} key={i}>{t} </span>
         ))}</h1>
-        <p className='tracking-widest leading-10 lg:text-lg text-[#828282]'>{blurb.length>maxLength ? blurb.substring(0, maxLength) + "..." : blurb}</p>
+        <p className='tracking-widest leading-10 lg:text-lg text-[#828282]'>{blurb.length > maxLength ? truncateBlurb : blurb}</p>
         <Link to={`/posts/${postId}`} className='my-10 block text-right' >Read Article <svg className='inline' width="10" height="10" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg"><path id="Vector" d="M0 8V6H10.3535L6.90234 2L7.76513 0L13.8047 7L7.76513 14L6.90234 12L10.3535 8H0Z" fill='#000' /></svg></Link>
       </div>
       <div className='relative basis-1/3 me-[30px]'>

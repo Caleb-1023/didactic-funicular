@@ -83,6 +83,8 @@ const Section = ({category}: SectionProps) => {
 }
 
 const BigPicture = ({category, title, blurb, publishedDate, postId, thumbnailUrl}: BigProps) => {
+  // const maxLength = 250
+
   return (
     <div className='relative h-[500px] lg:h-[820px] rounded-lg newsreader'>
       <div className='w-full h-full absolute top-0 left-0 z-10'>
@@ -94,7 +96,10 @@ const BigPicture = ({category, title, blurb, publishedDate, postId, thumbnailUrl
           <h4 className='text-3xl lg:text-5xl font-bold italic w-1/2'>{title}</h4>
         </div>
         <div className='  w-full'>
-          <p className='text-lg lg:text-2xl leading-8 font-medium'>{blurb}</p>
+          <p className='text-lg lg:text-2xl leading-8 font-medium'>
+            {/* {blurb.length>maxLength ? blurb.substring(0, maxLength) + "..." : blurb} */}
+            {blurb}
+            </p>
           <div className='flex justify-between font-medium text-lg mt-6'>
               <p className='basis-1/2'>{new Date(parseInt(publishedDate)).toDateString()}</p>
               <Link to={`/posts/${postId}`} className='basis-1/2 text-right'>Read Article <svg className='inline' width="10" height="10" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg"><path id="Vector" d="M0 8V6H10.3535L6.90234 2L7.76513 0L13.8047 7L7.76513 14L6.90234 12L10.3535 8H0Z" fill="#fff"/></svg></Link>
@@ -106,11 +111,15 @@ const BigPicture = ({category, title, blurb, publishedDate, postId, thumbnailUrl
 }
 
 const SmallCard = ({title, blurb, postId, thumbnailUrl}: SmallProps) => {
+  const maxLength = 250
+
+  const truncateBlurb = blurb?.split(' ').splice(0, 25).concat(['...']).join(' ')
+  
   return (
-    <div className='newsreader text-[#474F62] md:basis-1/2 lg:basis-1'>
-      <img src={thumbnailUrl ? thumbnailUrl : "https://yinkablog.blob.core.windows.net/yinkasblog/cc198882-8a77-40ba-99a4-c5301717c87f3.09.30.jpg"} alt="Post Thumbnail" className='rounded-xl mb-5 w-full max-h-[50%] object-cover' />
-      <h3 className='mb-5 text-xl font-bold tracking-wider leading-7'>{title}</h3>
-      <p className='mb-5 text-base lg:text-xs tracking-widest leading-5'>{blurb}</p>
+    <div className='newsreader text-[#474F62] h-[400px] md:basis-1/2 lg:basis-1'>
+      <img src={thumbnailUrl ? thumbnailUrl : "https://yinkablog.blob.core.windows.net/yinkasblog/cc198882-8a77-40ba-99a4-c5301717c87f3.09.30.jpg"} alt="Post Thumbnail" className='rounded-xl mb-5 w-full max-h-[200px] object-cover' />
+      <h3 className='mb-3 text-xl font-bold tracking-wider leading-7'>{title}</h3>
+      <p className='mb-3 text-base lg:text-xs tracking-widest leading-5'>{blurb.length > maxLength ? truncateBlurb : blurb}</p>
       <Link  to={`/posts/${postId}`} className=''>Read Story <svg className='inline' width="10" height="10" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg"><path id="Vector" d="M0 8V6H10.3535L6.90234 2L7.76513 0L13.8047 7L7.76513 14L6.90234 12L10.3535 8H0Z" fill="#474F62"/></svg></Link>
     </div>
   )
